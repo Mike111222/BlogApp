@@ -10,8 +10,4 @@ class User < ApplicationRecord
   def update_posts_counter
     update(posts_counter: posts.count)
   end
-
-  def update_comments_counter
-    update(comments_counter: comments.count)
-  end
 end
