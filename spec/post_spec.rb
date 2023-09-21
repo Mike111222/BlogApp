@@ -1,10 +1,10 @@
+# post_spec.rb
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
   describe 'validations for Post model' do
     before(:each) do
-      @user = User.create(name: 'Lilly', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.',
-                          posts_counter: 0)
+      @user = User.create(name: 'Lilly', posts_counter: 0)
       @post = Post.new(author: @user, title: 'Hello', text: 'This is my first post', likes_counter: 0,
                        comments_counter: 0)
     end
@@ -18,7 +18,10 @@ RSpec.describe Post, type: :model do
     end
 
     it 'Title must not exceed 250 characters' do
-      @post.title = 'less than 250 characters'
+      @post.title = 'a' * 251
+      expect(@post).to_not be_valid
+
+      @post.title = 'a' * 250
       expect(@post).to be_valid
     end
 
@@ -44,9 +47,26 @@ RSpec.describe Post, type: :model do
       expect(@post).to be_valid
     end
 
-    it 'should return less than 5 comments ' do
+    it 'should return less than 5 comments' do
       value = @post.recent_comments.length
       expect(value).to be < 5
+    end
+
+    it 'updates the author\'s posts_counter' do
+      user = User.create(name: 'Test User', posts_counter: 0)
+      post = Post.create(author: user, title: 'Test Title', text: 'Test Text', likes_counter: 0, comments_counter: 0)
+
+
+      expect(user.posts_counter).to eq(1)
+
+
+      post.update_author_posts_counter
+
+
+      user.reload
+
+
+      expect(user.posts_counter).to eq(1)
     end
   end
 end
