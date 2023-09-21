@@ -34,7 +34,6 @@ RSpec.describe User, type: :model do
       end
 
       recent_posts = user.recent_posts
-
       # Ensure that only 3 recent posts are returned
       expect(recent_posts.length).to eq(3)
     end
@@ -43,16 +42,9 @@ RSpec.describe User, type: :model do
       user = User.create(name: 'Test User', posts_counter: 0)
       post = Post.create(author: user, title: 'Test Title', text: 'Test Text', likes_counter: 0, comments_counter: 0)
 
-
       expect(user.posts_counter).to eq(1)
-
-
       post.update_author_posts_counter
-
-
       user.reload
-
-
       expect(user.posts_counter).to eq(1)
     end
   end
