@@ -1,9 +1,11 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
-
   def index
     @user = User.find(params[:user_id])
     @posts = @user.posts
+  end
+
+  def show
+    @post = Post.find(params[:id])
   end
 
   def new
@@ -11,7 +13,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     if @post.save
       redirect_to user_path(id: @post.author_id), notice: 'Post was successfully created.'
@@ -19,10 +21,6 @@ class PostsController < ApplicationController
       flash.now[:alert] = 'An error has occurred while creating the post.'
       render :new
     end
-  end
-
-  def show
-    @post = Post.find(params[:id])
   end
 
   private
