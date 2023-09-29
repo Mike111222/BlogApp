@@ -1,6 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 
-# For creating users
+# Create users
 
 first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.')
 second_user = User.create(name: 'Lilly', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Poland.')
@@ -12,13 +12,14 @@ second_user = User.create(name: 'Lilly', photo: 'https://unsplash.com/photos/F_-
   puts "Post Title: #{first_post.title}"
   puts "Post Author: #{first_post.author.name}"
 
-  # Create comments
-  Comment.create(post: first_post, author: second_user, text: 'Hi Tom!')
-  Comment.create(post: first_post, author: second_user, text: 'Nice post!')
-  Comment.create(post: first_post, author: second_user, text: 'Keep it up!')
-  Comment.create(post: first_post, author: second_user, text: 'Great work!')
-  Comment.create(post: first_post, author: second_user, text: 'Awesome!')
-  Comment.create(post: first_post, author: second_user, text: 'Well done!')
+  # Create comments with the correct author and post
+  comment_author = User.find_by(name: 'Lilly')
+  Comment.create(post: first_post, author: comment_author, text: 'Hi Tom!', post_id: first_post.id)
+  Comment.create(post: first_post, author: comment_author, text: 'Nice post!', post_id: first_post.id)
+  Comment.create(post: first_post, author: comment_author, text: 'Keep it up!', post_id: first_post.id)
+  Comment.create(post: first_post, author: comment_author, text: 'Great work!', post_id: first_post.id)
+  Comment.create(post: first_post, author: comment_author, text: 'Awesome!', post_id: first_post.id)
+  Comment.create(post: first_post, author: comment_author, text: 'Well done!', post_id: first_post.id)
 
   # Verify the comments
   puts "Comments for Post: #{first_post.comments.count}"
