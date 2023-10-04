@@ -5,7 +5,12 @@
 
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: name, placeholder: 'Name', autofocus: true %>
+    <%= f.text_field :name, autocomplete: 'name', placeholder: 'Name', autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bio %><br />
+    <%= f.text_field :bio, autocomplete: 'bio', placeholder: 'bio', autofocus: true %>
   </div>
 
   <div class="field">
